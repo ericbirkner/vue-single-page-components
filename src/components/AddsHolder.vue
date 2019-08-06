@@ -28,7 +28,7 @@ export default {
     },
     created: function() {
       axios
-        .get("https://jsonplaceholder.typicode.com/albums/1/photos")
+        .get("http://jsonplaceholder.typicode.com/photos?_start=0&_limit=5")
         .then(res => {
           this.adds = res.data;
           this.loading = false;

@@ -40,7 +40,7 @@ export default {
     },
     created: function() {
       axios
-        .get("https://jsonplaceholder.typicode.com/posts")
+        .get("https://jsonplaceholder.typicode.com/posts?userId=1")
         .then(res => {
           this.news = res.data;
           this.loading = false;

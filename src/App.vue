@@ -12,7 +12,7 @@
                 <adds-holder></adds-holder>
             </div>
         </div>
-        
+
 
   </div>
 </template>
