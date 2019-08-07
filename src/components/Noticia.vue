@@ -7,11 +7,10 @@
         </div>
       </div>
 
-       <div v-else class="news-holder" v-for="(newsContent, index) in news">
-            <h1 class="text-danger">{{newsContent.title}}</h1>
-            <p>{{newsContent.body}}</p>
-            <router-link :to="{ name: 'noticia', params: { id: newsContent.id } }">Leer más</router-link>
-            <div style="border: 1px dashed;" class="mt-2"></div>
+       <div>
+            <h1 class="text-danger">{{new.title}}</h1>
+            <p>{{new.body}}</p>
+            
        </div>
     </div>
 </template>
@@ -19,7 +18,7 @@
 <script>
 import axios from 'axios'
 export default {
-    name: "NewsHolder",
+    name: "Noticia",
     props: {
         date: {
             type: String,
@@ -30,19 +29,14 @@ export default {
     data() {
         return {
           loading:true,
-          news: [],
-        }
-    },
-    methods: {
-        readNews(newsNum){
-            this.$emit('read', newsNum);
+          new: [],
         }
     },
     created: function() {
       axios
-        .get("https://jsonplaceholder.typicode.com/posts?userId=1")
+        .get("http://jsonplaceholder.typicode.com/posts/1")
         .then(res => {
-          this.news = res.data;
+          this.new = res.data;
           this.loading = false;
         })
     }
