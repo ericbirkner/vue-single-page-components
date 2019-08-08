@@ -1,21 +1,16 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
 import App from './App.vue'
-import NewsHolder from "./components/NewsHolder";
-import LinksHolder from "./components/LinksHolder";
-import AddsHolder from "./components/AddsHolder";
-import Noticia from './components/Noticia.vue'
+import VueRouter from 'vue-router';
 
-Vue.use(VueRouter)
+import routes from './routes';
 
-const router = new VueRouter({
-    routes: [
-      { path: '/', component: App },
-      { path: '/noticia/:id', name: 'noticia', component: Noticia }
-    ]
-})
+Vue.config.productionTip = false;
+
+Vue.use(VueRouter);
+
+const router = new VueRouter({routes});
 
 new Vue({
-   render: h => h(App),
-   router
-}).$mount('#app')
+    router,
+    render: h => h(App)
+}).$mount('#app');

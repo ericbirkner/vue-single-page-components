@@ -8,9 +8,9 @@
       </div>
 
        <div>
-            <h1 class="text-danger">{{new.title}}</h1>
-            <p>{{new.body}}</p>
-            
+            <h1 class="text-danger">{{noticia.title}}</h1>
+            <p>{{noticia.body}}</p>
+
        </div>
     </div>
 </template>
@@ -29,14 +29,14 @@ export default {
     data() {
         return {
           loading:true,
-          new: [],
+          noticia: [],
         }
     },
     created: function() {
       axios
         .get("http://jsonplaceholder.typicode.com/posts/1")
         .then(res => {
-          this.new = res.data;
+          this.noticia = res.data;
           this.loading = false;
         })
     }

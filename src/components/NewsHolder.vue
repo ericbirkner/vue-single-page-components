@@ -1,6 +1,8 @@
 <template>
-    <div>
 
+<div class="row">
+    <h1 class="text-center mb-5">Web con single page components</h1>
+    <div class="col-md-9 col-12">
       <div v-if="loading" class="text-center">
         <div class="spinner-border" role="status">
           <span class="sr-only">Loading...</span>
@@ -14,12 +16,22 @@
             <div style="border: 1px dashed;" class="mt-2"></div>
        </div>
     </div>
+    <div class="col-md-2 d-sm-none d-md-block">
+        <links-holder></links-holder>
+
+        <adds-holder></adds-holder>
+    </div>
+  </div>
 </template>
 
 <script>
 import axios from 'axios'
+import LinksHolder from "./LinksHolder";
+import AddsHolder from "./AddsHolder";
+
 export default {
     name: "NewsHolder",
+    components: {AddsHolder, LinksHolder},
     props: {
         date: {
             type: String,
