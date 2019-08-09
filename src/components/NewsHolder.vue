@@ -19,12 +19,13 @@
        </div>
 
        <div class="clearfix btn-group col-md-2 offset-md-5 m-4">
-           <button type="button" class="btn btn-sm btn-outline-secondary" v-if="page != 1" @click="page--"> << </button>
+           <router-link :to="`/noticias/page/${page-1}`" class="btn btn-sm btn-outline-secondary" v-if="page != 1"> << </router-link>
 
            <span v-for="pageNumber in pages.slice(page-1, page+5)">
-           <router-link :to="`/noticias/page/${pageNumber}`" class="btn btn-sm btn-outline-secondary" > {{pageNumber}} </router-link>
-          </span>
-           <button type="button" @click="page++" v-if="page < pages.length" class="btn btn-sm btn-outline-secondary"> >> </button>
+           <router-link :to="`/noticias/page/${pageNumber}`" v-on:click="set_clase" class="btn btn-sm btn-outline-secondary"> {{pageNumber}} </router-link>
+           </span>
+
+           <router-link :to="`/noticias/page/${page+1}`" class="btn btn-sm btn-outline-secondary" v-if="page < pages.length"> >> </router-link>
          </div>
 
     </div>
@@ -81,14 +82,19 @@ export default {
         },
         paginate (posts) {
             let page = this.page;
-            if(this.$route.params.page){
+            if(this.$route.params.page>0){
+              //console.log(this.$route.params.page)
               page = this.$route.params.page;
             }
+            this.page = parseInt(page);
             let perPage = this.perPage;
             let from = (page * perPage) - perPage;
             let to = (page * perPage);
             return  posts.slice(from, to);
         },
+        set_clase(event){
+          console.log(event.target);
+        }
     },
     computed: {
         displayedPosts () {
@@ -102,14 +108,6 @@ export default {
     },
     created: function() {
       this.getPosts();
-      /*
-      axios
-        .get("https://jsonplaceholder.typicode.com/posts")
-        .then(res => {
-          this.news = res.data;
-          this.loading = false;
-        })
-      */
     }
 }
 </script>
