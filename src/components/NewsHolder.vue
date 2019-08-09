@@ -1,5 +1,5 @@
 <template>
-<div>
+<transition name="slide-fade">
 <div class="row">
 
     <div class="col-12"><h1 class="text-center mb-3">Web con single page components</h1></div>
@@ -20,7 +20,10 @@
 
        <div class="clearfix btn-group col-md-2 offset-md-5 m-4">
            <button type="button" class="btn btn-sm btn-outline-secondary" v-if="page != 1" @click="page--"> << </button>
-           <button type="button" class="btn btn-sm btn-outline-secondary" v-for="pageNumber in pages.slice(page-1, page+5)" @click="page = pageNumber"> {{pageNumber}} </button>
+
+           <span v-for="pageNumber in pages.slice(page-1, page+5)">
+           <router-link :to="`/noticias/page/${pageNumber}`" class="btn btn-sm btn-outline-secondary" > {{pageNumber}} </router-link>
+          </span>
            <button type="button" @click="page++" v-if="page < pages.length" class="btn btn-sm btn-outline-secondary"> >> </button>
          </div>
 
@@ -37,8 +40,8 @@
 
   </div>
 
+</transition>
 
-</div>
 </template>
 
 <script>
@@ -78,6 +81,9 @@ export default {
         },
         paginate (posts) {
             let page = this.page;
+            if(this.$route.params.page){
+              page = this.$route.params.page;
+            }
             let perPage = this.perPage;
             let from = (page * perPage) - perPage;
             let to = (page * perPage);
@@ -112,4 +118,16 @@ export default {
 h2{
   color:gray;
 }
+
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to{
+  transform: translateX(10px);
+  opacity: 0;
+}
+
 </style>
