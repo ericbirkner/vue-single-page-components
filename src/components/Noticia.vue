@@ -19,13 +19,6 @@
 import axios from 'axios'
 export default {
     name: "Noticia",
-    props: {
-        date: {
-            type: String,
-            required: false,
-            default: 'today'
-        }
-    },
     data() {
         return {
           loading:true,
@@ -33,8 +26,9 @@ export default {
         }
     },
     created: function() {
+      var not_id = this.$route.params.id
       axios
-        .get("http://jsonplaceholder.typicode.com/posts/1")
+        .get("http://jsonplaceholder.typicode.com/posts/"+not_id)
         .then(res => {
           this.noticia = res.data;
           this.loading = false;
