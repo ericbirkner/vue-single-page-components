@@ -12,17 +12,23 @@
             <p>{{noticia.body}}</p>
 
        </div>
+       <div>&nbsp;</div>
+       <Comentarios :idNoticia="idNoticia"></Comentarios>
+
     </div>
 </template>
 
 <script>
 import axios from 'axios'
+import Comentarios from './Comentarios'
 export default {
     name: "Noticia",
+    components: {Comentarios},
     data() {
         return {
           loading:true,
           noticia: [],
+          idNoticia: this.$route.params.id
         }
     },
     created: function() {
