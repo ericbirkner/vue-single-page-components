@@ -2,7 +2,10 @@
 <transition name="slide-fade">
 <div class="row">
 
-    <div class="col-12"><h1 class="text-center mb-3">Web con single page components</h1></div>
+    <div class="col-12">
+      <h1 class="text-center mb-3">Web con single page components</h1>
+
+    </div>
 
     <div class="col-md-9 col-12">
        <div v-if="loading" class="text-center">
@@ -32,6 +35,12 @@
 
 
     <div class="col-md-2 d-sm-none d-md-block">
+
+      <div class="form-group has-search">
+        <span class="fa fa-search form-control-feedback"></span>
+        <input v-on:keyup="buscar" type="text" class="form-control" placeholder="Buscar">
+      </div>
+
         <links-holder></links-holder>
 
         <adds-holder></adds-holder>
@@ -59,8 +68,10 @@ export default {
           posts: [],
           baseUrl: 'https://jsonplaceholder.typicode.com/',
           page: 1,
-          perPage: 9,
+          perPage: 10,
           pages: [],
+          busqueda:'',
+          filtered:null
         }
     },
     methods: {
@@ -74,8 +85,9 @@ export default {
                 console.log(response);
             });
         },
-        setPages () {
-            let numberOfPages = Math.ceil(this.posts.length / this.perPage);
+        setPages (total) {
+            let numberOfPages = Math.ceil(total / this.perPage);
+            this.pages = [];
             for (let index = 1; index <= numberOfPages; index++) {
                 this.pages.push(index);
             }
@@ -94,18 +106,24 @@ export default {
         },
         set_clase(event){
           console.log(event.target);
+        },
+        buscar(event){
+          this.busqueda = event.target.value;
         }
     },
     computed: {
         displayedPosts () {
-            return this.paginate(this.posts);
+            let filtered = this.posts;
+            if(this.busqueda.length>1){
+              filtered = filtered.filter(post => {
+                return post.title.includes(this.busqueda)
+              })
+            }
+            this.setPages(filtered.length);
+            return this.paginate(filtered)
         }
     },
-    watch: {
-        posts () {
-            this.setPages();
-        }
-    },
+
     created: function() {
       this.getPosts();
     }
@@ -126,6 +144,22 @@ h2{
 .slide-fade-enter, .slide-fade-leave-to{
   transform: translateX(10px);
   opacity: 0;
+}
+
+.has-search .form-control {
+    padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
 }
 
 </style>
