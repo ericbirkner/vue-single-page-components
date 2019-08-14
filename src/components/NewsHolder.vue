@@ -36,10 +36,7 @@
 
     <div class="col-md-2 d-sm-none d-md-block">
 
-      <div class="form-group has-search">
-        <span class="fa fa-search form-control-feedback"></span>
-        <input v-on:keyup="buscar" type="text" class="form-control" placeholder="Buscar">
-      </div>
+        <buscador/>
 
         <links-holder></links-holder>
 
@@ -58,10 +55,11 @@
 import axios from 'axios'
 import LinksHolder from "./LinksHolder";
 import AddsHolder from "./AddsHolder";
+import Buscador from "./Buscador";
 
 export default {
     name: "NewsHolder",
-    components: {AddsHolder, LinksHolder},
+    components: {AddsHolder, LinksHolder,Buscador},
     data() {
         return {
           loading:true,
@@ -106,9 +104,6 @@ export default {
         },
         set_clase(event){
           console.log(event.target);
-        },
-        buscar(event){
-          this.busqueda = event.target.value;
         }
     },
     computed: {
